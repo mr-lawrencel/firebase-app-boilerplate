@@ -23,5 +23,5 @@ jobs:
         with:
           firebaseServiceAccount: >-
             ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LAWRENCEL_FIREBASE_BOILERPLATE }}
-          channelId: ${{ $BRANCH_NAME == 'master' && 'live' || 'staging' }}
+          channelId: ${{ BRANCH_NAME == "master" && "live" || "staging" }}
           projectId: lawrencel-firebase-boilerplate
