@@ -9,6 +9,10 @@ name: Deploy to Firebase Website-FE Hosting on merge
       - staging
     paths:
       - 'hosting/website-fe/**'
+
+env:
+  BRANCH_NAME: ${GITHUB_REF##*/}
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -19,5 +23,5 @@ jobs:
         with:
           firebaseServiceAccount: >-
             ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LAWRENCEL_FIREBASE_BOILERPLATE }}
-          channelId: ${{ GITHUB_REF##*/ == 'master' && 'live' || 'staging' }}
+          channelId: ${{ $BRANCH_NAME == 'master' && 'live' || 'staging' }}
           projectId: lawrencel-firebase-boilerplate
