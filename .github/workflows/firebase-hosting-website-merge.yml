@@ -26,3 +26,4 @@ jobs:
             ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LAWRENCEL_FIREBASE_BOILERPLATE }}
           channelId: ${{ env.BRANCH_NAME == 'master' && 'live' || 'staging' }}
           projectId: lawrencel-firebase-boilerplate
+          entrypoint: hosting/website-fe
