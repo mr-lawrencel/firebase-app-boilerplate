@@ -6,24 +6,25 @@ name: Deploy to Firebase Website-FE Hosting on merge
   push:
     branches:
       - master
-      - staging
     paths:
       - 'hosting/website-fe/**'
-
-env:
-  BRANCH_NAME: ${GITHUB_REF##*/}
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./hosting/website-fe
     steps:
-      - uses: actions/checkout@v2
-      - run: yarn --cwd hosting/website-fe install
-      - run: yarn --cwd hosting/website-fe build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          firebaseServiceAccount: >-
-            ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LAWRENCEL_FIREBASE_BOILERPLATE }}
-          channelId: ${{ env.BRANCH_NAME == 'master' && 'live' || 'staging' }}
-          projectId: lawrencel-firebase-boilerplate
-          entrypoint: hosting/website-fe
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn install
+      - name: Build NextJS
+        run: yarn build
+      - name: Deploy to firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+          with:
+            firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_LAWRENCEL_FIREBASE_BOILERPLATE }}"
+            projectId: lawrencel-firebase-boilerplate
+            channelId: live

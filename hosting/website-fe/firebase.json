@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "source": "website-fe",
+    "source": ".",
     "ignore": [
       "firebase.json",
       "**/.*",
